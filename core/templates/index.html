@@ -1,0 +1,14 @@
+{% extends 'base.html' %} 
+{% load static %} 
+
+{% block head_title %}Library Management System{% endblock %} {% block content %}
+
+<div class="w-full lg:w-1/2 lg:py-6 text-center " style="margin-left:250px;margin-top:80px">
+    <p class="leading-normal mb-4">
+        This is a simple Library Management System where you can deposit money, see books and borrow books. You can also create an account, login, logout. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed nemo quaerat quo dicta, adipisci eum fuga ratione id numquam eius veniam placeat voluptatum, itaque tempora molestias vel, blanditiis fugiat ipsam!
+    </p>
+    <img class ="rounded-2xl" src ="{% static './img/Library.png' %}"/>
+</div>
+
+
+{% endblock %}

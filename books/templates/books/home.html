@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_title %}Library Management System{% endblock %}
+{% block content %}
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-2" role="alert">
+    <p class="font-bold">Error!</p>
+    <p class="block sm:inline">{{ error }}</p>
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="bg-white px-3 py-4 rounded-xl my-6">
+
+    <h4 class="font-bold text-3xl text-left pb-5">Account NO: {{ request.user.account.account_no }}</h4>
+    
+    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        
+        <!-- Book Categories Section -->
+        <div class="flex flex-col md:flex-row p-5">
+            <div class="md:w-1/2 bg-white p-4">
+                <h5 class="text-lg font-semibold">All Book Categories</h5>
+                <div class="flex flex-wrap mt-3">
+                    {% for bk in bookcategories %}
+                    <div class="flex items-center mb-4 mr-6">
+                        <input class="form-checkbox text-indigo-600 h-4 w-4 rounded border-gray-300 focus:ring-indigo-500" type="radio" name="bookcategories" id="{{ bk.id }}">
+                        <label class="ml-2 text-sm font-medium text-gray-900" for="{{ bk.id }}">
+                            <a href="{% url 'book_wise_post' bk.slug %}" class="text-indigo-600 hover:text-indigo-800">{{ bk.category_name }}</a>
+                        </label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+</div>
+<div class="bg-white px-3 py-4 rounded-xl my-6">
+        <!-- Move the books display section outside of the category section -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 m-5"> <!-- Grid container -->
+            {% for book in data %}
+                <div class="bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"> <!-- Card wrapper -->
+                    <img class="rounded-t-lg" src="{{ book.img.url }}" alt="{{ book.title }}" />
+                    <div class="p-5">
+                        <a href="{% url 'detail_post' book.id %}">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ book.title }}</h5>
+                        </a>
+                        <p class="mb-2 text-sm text-gray-700 dark:text-gray-400">{{ book.description | truncatewords:5 }}</p>
+                        <p class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">{{ book.borrow_price }}</p>
+                        
+                        <a href="{% url 'detail_post' book.id %}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            View more
+                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>        
+    </div>
+</div>
+{% endblock %}
